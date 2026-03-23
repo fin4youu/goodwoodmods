@@ -1,0 +1,45 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "A user of the Goodwood RBLX Moderator Academy",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "moderator", "trainee"] },
+        "status": { "type": "string", "enum": ["pending", "in-progress", "passed", "failed"] },
+        "currentModule": { "type": "number" },
+        "testScore": { "type": "number" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["uid", "email", "displayName", "role", "status", "currentModule", "testScore", "createdAt"]
+    },
+    "InviteCode": {
+      "title": "InviteCode",
+      "description": "An invite code to join the academy",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "createdBy": { "type": "string" },
+        "usedBy": { "type": "string", "nullable": true },
+        "createdAt": { "type": "number" },
+        "usedAt": { "type": "number" },
+        "roleToAssign": { "type": "string", "enum": ["admin", "trainee"] }
+      },
+      "required": ["code", "createdBy", "createdAt", "roleToAssign"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profiles"
+    },
+    "/inviteCodes/{codeId}": {
+      "schema": { "$ref": "#/entities/InviteCode" },
+      "description": "Invite codes"
+    }
+  }
+}
